@@ -25,13 +25,13 @@ public class shoot : MonoBehaviour
                 //gameManger.ReloadArrow();
                 hasClicked = true;
                 Vector3 position = this.transform.position;
-                position.y += 0.55f;
+                position.y += 0.3f;
                 this.transform.position = position;
             }
             if (hasClicked)
             {
                 Vector3 position = this.transform.position;
-                position.y += 0.25f;
+                position.y += 0.3f;
                 this.transform.position = position;
             }
         }

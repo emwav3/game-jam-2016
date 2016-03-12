@@ -13,6 +13,6 @@ public class MoveCogWheel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         cogTransform = GetComponent<Transform>();
-        cogTransform.Rotate(0, 0, 1);
+        cogTransform.Rotate(0, 0, 0.5f);
 	}
 }
