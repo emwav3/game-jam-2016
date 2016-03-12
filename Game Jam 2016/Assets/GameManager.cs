@@ -30,7 +30,11 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(LevelComplete())
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(ReloadArrowCoroutine());
+        }
+            if (LevelComplete())
         {
             this.levelNumber += 1;
         }
@@ -45,12 +49,18 @@ public class GameManager : MonoBehaviour {
 
     }
 
+    public IEnumerator ReloadArrowCoroutine()
+    {
+        yield return new WaitForSeconds(0.0f);
+        ReloadArrow();
+    }
     public void ReloadArrow()
     {
-        arrowSpawnPoint = GameObject.FindGameObjectWithTag("ArrowSpawn");
+        
+        //arrowSpawnPoint = GameObject.FindGameObjectWithTag("ArrowSpawn");
         arrowSpawnPointTransform = arrowSpawnPoint.GetComponent<Transform>();
 
-        Instantiate(arrow, new Vector2(arrowSpawnPointTransform.position.x, arrowSpawnPointTransform.position.y), Quaternion.identity);
+        Instantiate(arrow, new Vector3(arrowSpawnPointTransform.position.x, arrowSpawnPointTransform.position.y, arrowSpawnPointTransform.position.z), Quaternion.identity);
 
 
 

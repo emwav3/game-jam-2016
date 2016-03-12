@@ -3,7 +3,7 @@ using System.Collections;
 
 public class shoot : MonoBehaviour {
 
-    bool hasClicked = false;
+    bool hasHit = false;
     GameManager gameManger;
 
 	// Use this for initialization
@@ -13,15 +13,15 @@ public class shoot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
-        {
-                gameManger.ReloadArrow();
-                hasClicked = true;
-                Vector3 position = this.transform.position;
-                position.y += 0.25f;
-                this.transform.position = position;
-        }
-        if (hasClicked)
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //        //gameManger.ReloadArrow();
+        //        hasClicked = true;
+        //        Vector3 position = this.transform.position;
+        //        position.y += 0.55f;
+        //        this.transform.position = position;
+        //}
+        if (!hasHit)
         {
             Vector3 position = this.transform.position;
             position.y += 0.25f;
@@ -31,14 +31,15 @@ public class shoot : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        GameObject arrow = GameObject.FindGameObjectWithTag("Arrow");
+        //GameObject arrow = GameObject.FindGameObjectWithTag("Arrow");
         GameObject cogWheel = GameObject.FindGameObjectWithTag("cogWheel");
         if (col.gameObject.tag == "cogWheel")
         {
             Debug.Log("hi");
             // attach a to b
-            arrow.transform.parent = cogWheel.transform;
-            hasClicked = false;
+            this.transform.parent = cogWheel.transform;
+            print("HIT!");
+            this.hasHit = true;
         }
     }
 }
