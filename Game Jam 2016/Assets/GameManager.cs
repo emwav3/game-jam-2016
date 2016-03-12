@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -6,7 +7,7 @@ public class GameManager : MonoBehaviour {
     public GameObject arrow;
     Transform arrowSpawnPointTransform;
     public GameObject arrowSpawnPoint;
-
+    GameObject cogWheel;
 
     int levelNumber = 0;
     public int[] arrowsOnLevel = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -16,6 +17,11 @@ public class GameManager : MonoBehaviour {
     public int arrowsShot;
     public int arrowsHit;
 
+    private bool gameOver;
+    private bool restart;
+
+    public Text gameOverText;
+    public Text restartText;
 
     // Use this for initialization
     void Awake () {
@@ -38,9 +44,25 @@ public class GameManager : MonoBehaviour {
         {
             this.levelNumber += 1;
         }
+        if (gameOver)
+        {
+            cogWheel = GameObject.FindGameObjectWithTag("cogWheel");
+            Transform cogWheelTrans = cogWheel.GetComponent<Transform>();
+            cogWheelTrans.Rotate(0, 0, -1);
+            restartText.text = "Press 'R' for Restart";
+            restart = true;
 
-        
-	}
+        }
+        if (restart)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Application.LoadLevel(Application.loadedLevel);
+                Time.timeScale = 1.0f;
+            }
+        }
+
+    }
 
     void ReloadWheel()
     {
@@ -51,20 +73,28 @@ public class GameManager : MonoBehaviour {
 
     public IEnumerator ReloadArrowCoroutine()
     {
-        yield return new WaitForSeconds(0.0f);
+        yield return new WaitForSeconds(0.15f);
         ReloadArrow();
     }
     public void ReloadArrow()
     {
-        
+
         //arrowSpawnPoint = GameObject.FindGameObjectWithTag("ArrowSpawn");
         arrowSpawnPointTransform = arrowSpawnPoint.GetComponent<Transform>();
 
         Instantiate(arrow, new Vector3(arrowSpawnPointTransform.position.x, arrowSpawnPointTransform.position.y, arrowSpawnPointTransform.position.z), Quaternion.identity);
-
-
-
     }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0.0f;
+        gameOverText.text = "Game Over!";
+        gameOver = true;
+        print("game over!");
+        
+    }
+
+
     public bool LevelComplete()
     {
         return this.totalArrowsForLevel == this.arrowsHit;
