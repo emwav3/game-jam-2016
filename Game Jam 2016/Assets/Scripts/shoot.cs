@@ -27,19 +27,16 @@ public class shoot : MonoBehaviour {
         }
 	}
 
-    void OnCollisionEnter(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        GameObject arrow = GameObject.FindGameObjectWithTag("arrow_blue");
+        GameObject arrow = GameObject.FindGameObjectWithTag("Arrow");
         GameObject cogWheel = GameObject.FindGameObjectWithTag("cogWheel");
         if (col.gameObject.tag == "cogWheel")
         {
             Debug.Log("hi");
             // attach a to b
             arrow.transform.parent = cogWheel.transform;
-            // make sure its exactly on it
-            arrow.transform.localPosition = Vector3.zero;
-            arrow.transform.localRotation = Quaternion.identity;
-            
+            hasClicked = false;
         }
     }
 }
